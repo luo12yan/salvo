@@ -98,6 +98,7 @@ pub mod prelude {
         #![feature ="tower-compat"]
         pub use crate::tower_compat::{TowerServiceCompat, TowerLayerCompat};
     }
+    #[cfg(not(feature = "cf-worker"))]
     pub use crate::conn::{JoinedListener, Listener, TcpListener};
     pub use crate::handler::{self, Handler};
     pub use crate::routing::{FlowCtrl, Router};

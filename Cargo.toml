@@ -128,6 +128,9 @@ url = "2"
 uuid = "1"
 x509-parser = "0.15"
 
+#增加cloudflare-worker的支持
+getrandom= {version = "0.2.10"}
+
 # Compress
 brotli = { version = "3.3", default-features = false }
 flate2 = { version = "1.0", default-features = false }

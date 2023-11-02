@@ -10,7 +10,10 @@ use std::os::unix::fs::MetadataExt;
 
 use enumflags2::{bitflags, BitFlags};
 use headers::*;
+#[cfg(not(feature = "cf-worker"))]
 use tokio::fs::File;
+#[cfg(feature = "cf-worker")]
+use std::fs::File;
 
 use super::{ChunkedFile, ChunkedState};
 use crate::http::header::{CONTENT_DISPOSITION, CONTENT_ENCODING, IF_NONE_MATCH, RANGE};
@@ -161,7 +164,10 @@ impl NamedFileBuilder {
             flags,
         } = self;
 
+        #[cfg(not(feature = "cf-worker"))]
         let file = File::open(&path).await?;
+        #[cfg(feature = "cf-worker")]
+        let file = File::open(&path)?;
         let content_type = content_type.unwrap_or_else(|| {
             let ct = mime_infer::from_path(&path).first_or_octet_stream();
             let ftype = ct.type_();
@@ -175,7 +181,10 @@ impl NamedFileBuilder {
                 ct
             }
         });
+        #[cfg(not(feature = "cf-worker"))]
         let metadata = file.metadata().await?;
+        #[cfg(feature = "cf-worker")]
+        let metadata = file.metadata()?;
         let modified = metadata.modified().ok();
         let content_encoding = match content_encoding {
             Some(content_encoding) => Some(content_encoding.parse::<HeaderValue>().map_err(Error::other)?),
@@ -506,7 +515,10 @@ impl NamedFile {
                 offset,
                 total_size: cmp::min(length, self.metadata.len()),
                 read_size: 0,
+                #[cfg(not(feature = "cf-worker"))]
                 state: ChunkedState::File(Some(self.file.into_std().await)),
+                #[cfg(feature = "cf-worker")]
+                state: ChunkedState::File(Some(self.file)),
                 buffer_size: self.buffer_size,
             };
             res.headers_mut().typed_insert(ContentLength(reader.total_size));
@@ -515,7 +527,10 @@ impl NamedFile {
             res.status_code(StatusCode::OK);
             let reader = ChunkedFile {
                 offset,
+                #[cfg(not(feature = "cf-worker"))]
                 state: ChunkedState::File(Some(self.file.into_std().await)),
+                #[cfg(feature = "cf-worker")]
+                state: ChunkedState::File(Some(self.file)),
                 total_size: length,
                 read_size: 0,
                 buffer_size: self.buffer_size,

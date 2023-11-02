@@ -7,5 +7,6 @@ pub use hyper::rt::*;
 
 /// Tokio runtimes
 pub mod tokio {
+    #[cfg(not(feature = "cf-worker"))]
     pub use salvo_utils::rt::{TokioExecutor, TokioIo};
 }

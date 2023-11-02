@@ -16,8 +16,9 @@ all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
 [features]
-default = ["cookie", "http1", "fix-http1-request-uri", "http2", "test"]
-full = ["cookie", "http1", "fix-http1-request-uri", "http2", "quinn", "rustls", "native-tls", "openssl", "unix", "test", "tower-compat", "anyhow", "eyre"]
+default=["cf-worker"]
+#default = ["cookie", "http1", "fix-http1-request-uri", "http2", "test", "default-features"]
+full = ["cookie", "http1", "fix-http1-request-uri", "http2", "quinn", "rustls", "native-tls", "openssl", "unix", "test", "tower-compat", "anyhow", "eyre", "default-features"]
 cookie = ["dep:cookie"]
 http1 = []
 fix-http1-request-uri = ["http1"]
@@ -30,6 +31,15 @@ unix = ["http1"]
 test = ["dep:brotli", "dep:flate2", "dep:zstd", "dep:encoding_rs", "dep:serde_urlencoded", "dep:url", "tokio/macros"]
 acme = ["http1", "http2", "hyper/client", "dep:reqwest", "dep:rcgen", "dep:ring", "dep:x509-parser", "dep:tokio-rustls", "dep:rustls-pemfile"]
 tower-compat = ["dep:tower"]
+
+default-features=["dep:salvo-utils","default-tokio"]
+#增加tokio的特性，因为在wasm模式下很多tokio的特性不能使用
+default-tokio=["tokio/fs", "tokio/io-util", "tokio/macros", "tokio/net", "tokio/rt-multi-thread"]
+
+#wasm下tokio支持的特性
+cf-worker-tokio=['tokio/sync','tokio/macros','tokio/io-util','tokio/rt','tokio/time',]
+#增加cloudflare-worker的支持
+cf-worker=["dep:getrandom","cf-worker-tokio"]
 
 [dependencies]
 anyhow = { workspace = true, optional = true }
@@ -60,7 +70,7 @@ percent-encoding = { workspace = true }
 pin-project = { workspace = true }
 parking_lot = { workspace = true }
 quinn = { workspace = true, optional = true, features = ["runtime-tokio", "ring", "tls-rustls"] }
-rand = { workspace = true }
+rand = { workspace = true}
 rcgen = { workspace = true, optional = true }
 regex = { workspace = true }
 reqwest = { workspace = true, optional = true, features = ["rustls-tls", "json"] }
@@ -68,7 +78,9 @@ ring = { workspace = true, optional = true }
 rustls-pemfile = { workspace = true, optional = true }
 salvo-http3 = { workspace = true, optional = true, features = ["quinn"] }
 salvo_macros = { workspace = true }
-salvo-utils = { workspace = true, features = ["runtime"] }
+#salvo-utils = { workspace = true, features = ["runtime"]}
+#修改salvo-utils以兼容cloudflare-worker
+salvo-utils = { workspace = true, features = ["runtime"], optional = true }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true, features = ["raw_value"] }
 serde-xml-rs = { workspace = true }
@@ -76,7 +88,9 @@ serde_urlencoded = { workspace = true, optional = true }
 sync_wrapper = { workspace = true }
 tempfile = { workspace = true }
 thiserror = { workspace = true }
-tokio = { workspace = true, features = ["fs", "io-util", "macros", "net", "rt-multi-thread"] }
+#修改tokio以兼容cloudflare-worker
+#tokio = { workspace = true, features = ["fs", "io-util", "macros", "net", "rt-multi-thread"] }
+tokio = { workspace = true, default-features = false }
 tokio-native-tls = { workspace = true, optional = true }
 tokio-openssl = { workspace = true, optional = true }
 tokio-rustls = { workspace = true, optional = true }
@@ -89,6 +103,13 @@ x509-parser = { workspace = true, optional = true }
 brotli = { workspace = true, optional = true, features = ["default"] }
 flate2 = { workspace = true, optional = true, features = ["default"] }
 zstd = { workspace = true, optional = true, features = ["default"] }
+
+
+
+#增加getrandom特性兼容cloudflare-worker
+getrandom={workspace=true,optional = true,features = ["js"]}
+
+
 
 [dev-dependencies]
 fastrand = { workspace = true }

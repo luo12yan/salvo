@@ -86,7 +86,7 @@ impl HttpBuilder {
             })),
             None => Either::Right(socket),
         };
-
+        
         match version {
             Version::HTTP_10 | Version::HTTP_11 => {
                 #[cfg(not(feature = "http1"))]

@@ -13,7 +13,11 @@ use multimap::MultiMap;
 use rand::rngs::OsRng;
 use rand::RngCore;
 use tempfile::Builder;
+#[cfg(not(feature = "cf-worker"))]
 use tokio::fs::File;
+#[cfg(feature = "cf-worker")]
+use std::fs::File;
+#[cfg(not(feature = "cf-worker"))]
 use tokio::io::AsyncWriteExt;
 
 use crate::http::body::ReqBody;
@@ -156,11 +160,17 @@ impl FilePart {
                 .and_then(|name| { Path::new(name).extension().and_then(OsStr::to_str) })
                 .unwrap_or("unknown")
         ));
+        #[cfg(not(feature = "cf-worker"))]
         let mut file = File::create(&path).await?;
+        #[cfg(feature = "cf-worker")]
+        let mut file = File::create(&path)?;
         let mut size = 0;
         while let Some(chunk) = field.chunk().await? {
             size += chunk.len() as u64;
+            #[cfg(not(feature = "cf-worker"))]
             file.write_all(&chunk).await?;
+            #[cfg(feature = "cf-worker")]
+            file.write_all(&chunk)?;
         }
         Ok(FilePart {
             name,

@@ -24,60 +24,66 @@ name = "salvo"
 path = "src/lib.rs"
 
 [features]
-default = ["cookie", "http1", "fix-http1-request-uri", "http2", "test"]
-full = ["cookie", "http1", "fix-http1-request-uri", "http2", "quinn", "rustls", "native-tls", "openssl", "unix", "acme", "tower-compat", "anyhow", "eyre", "test", "affix", "basic-auth", "force-https", "jwt-auth", "catch-panic", "compression", "logging", "proxy", "concurrency-limiter", "rate-limiter", "sse", "trailing-slash", "timeout", "websocket", "request-id", "caching-headers", "cache", "cors", "csrf", "flash", "rate-limiter", "session", "serve-static", "otel", "oapi"]
-cookie = ["salvo_core/cookie"]
-http1 = ["salvo_core/http1"]
-fix-http1-request-uri = ["salvo_core/fix-http1-request-uri"]
-http2 = ["salvo_core/http2"]
-quinn = ["salvo_core/quinn"]
-rustls = ["salvo_core/rustls"]
-native-tls = ["salvo_core/native-tls"]
-openssl = ["salvo_core/openssl"]
-unix = ["salvo_core/unix"]
-acme = ["salvo_core/acme"]
-tower-compat = ["salvo_core/tower-compat"]
-anyhow = ["salvo_core/anyhow"]
-eyre = ["salvo_core/eyre"]
-test = ["salvo_core/test"]
-affix = ["salvo_extra/affix"]
-basic-auth = ["salvo_extra/basic-auth"]
-force-https = ["salvo_extra/force-https"]
-jwt-auth = ["dep:salvo-jwt-auth"]
-catch-panic = ["salvo_extra/catch-panic"]
-compression = ["dep:salvo-compression"]
-logging = ["salvo_extra/logging"]
-proxy = ["salvo-proxy"]
-concurrency-limiter = ["salvo_extra/concurrency-limiter"]
-size-limiter = ["salvo_extra/size-limiter"]
-sse = ["salvo_extra/sse"]
-trailing-slash = ["salvo_extra/trailing-slash"]
-timeout = ["salvo_extra/timeout"]
-websocket = ["salvo_extra/websocket"]
-request-id = ["salvo_extra/request-id"]
-caching-headers = ["salvo_extra/caching-headers"]
-cache = ["dep:salvo-cache"]
-cors = ["dep:salvo-cors"]
-csrf = ["dep:salvo-csrf"]
-flash = ["dep:salvo-flash"]
-rate-limiter = ["dep:salvo-rate-limiter"]
-session = ["dep:salvo-session"]
-serve-static = ["dep:salvo-serve-static"]
-otel = ["dep:salvo-otel"]
-oapi = ["dep:salvo-oapi"]
+default = ["cf-worker"]
+#default = ["cookie", "http1", "fix-http1-request-uri", "http2", "test"]
+# full = ["cookie", "http1", "fix-http1-request-uri", "http2", "quinn", "rustls", "native-tls", "openssl", "unix", "acme", "tower-compat", "anyhow", "eyre", "test", "affix", "basic-auth", "force-https", "jwt-auth", "catch-panic", "compression", "logging", "proxy", "concurrency-limiter", "rate-limiter", "sse", "trailing-slash", "timeout", "websocket", "request-id", "caching-headers", "cache", "cors", "csrf", "flash", "rate-limiter", "session", "serve-static", "otel", "oapi"]
+# cookie = ["salvo_core/cookie"]
+# http1 = ["salvo_core/http1"]
+# fix-http1-request-uri = ["salvo_core/fix-http1-request-uri"]
+# http2 = ["salvo_core/http2"]
+# quinn = ["salvo_core/quinn"]
+# rustls = ["salvo_core/rustls"]
+# native-tls = ["salvo_core/native-tls"]
+# openssl = ["salvo_core/openssl"]
+# unix = ["salvo_core/unix"]
+# acme = ["salvo_core/acme"]
+# tower-compat = ["salvo_core/tower-compat"]
+# anyhow = ["salvo_core/anyhow"]
+# eyre = ["salvo_core/eyre"]
+# test = ["salvo_core/test"]
+# affix = ["salvo_extra/affix"]
+# basic-auth = ["salvo_extra/basic-auth"]
+# force-https = ["salvo_extra/force-https"]
+# jwt-auth = ["dep:salvo-jwt-auth"]
+# catch-panic = ["salvo_extra/catch-panic"]
+# compression = ["dep:salvo-compression"]
+# logging = ["salvo_extra/logging"]
+# proxy = ["salvo-proxy"]
+# concurrency-limiter = ["salvo_extra/concurrency-limiter"]
+# size-limiter = ["salvo_extra/size-limiter"]
+# sse = ["salvo_extra/sse"]
+# trailing-slash = ["salvo_extra/trailing-slash"]
+# timeout = ["salvo_extra/timeout"]
+# websocket = ["salvo_extra/websocket"]
+# request-id = ["salvo_extra/request-id"]
+# caching-headers = ["salvo_extra/caching-headers"]
+# cache = ["dep:salvo-cache"]
+# cors = ["dep:salvo-cors"]
+# csrf = ["dep:salvo-csrf"]
+# flash = ["dep:salvo-flash"]
+# rate-limiter = ["dep:salvo-rate-limiter"]
+# session = ["dep:salvo-session"]
+# serve-static = ["dep:salvo-serve-static"]
+# otel = ["dep:salvo-otel"]
+# oapi = ["dep:salvo-oapi"]
+
+#增加cloudflare-worker的支持
+cf-worker = ["salvo_core/cf-worker"]
 
 [dependencies]
-salvo_core = { workspace = true }
-salvo_extra = { workspace = true, features = ["full"], optional = true }
-salvo-compression = { workspace = true, features = ["full"], optional = true }
-salvo-jwt-auth = { workspace = true, features = ["full"], optional = true }
-salvo-cache = { workspace = true, features = ["full"], optional = true }
-salvo-cors = { workspace = true, optional = true }
-salvo-csrf = { workspace = true, features = ["full"], optional = true }
-salvo-flash = { workspace = true, features = ["full"], optional = true }
-salvo-rate-limiter = { workspace = true, features = ["full"], optional = true }
-salvo-session = { workspace = true, optional = true }
-salvo-serve-static = { workspace = true, features = ["full"], optional = true }
-salvo-proxy = { workspace = true, optional = true }
-salvo-otel = { workspace = true, optional = true }
-salvo-oapi = { workspace = true, features = ["full"], optional = true }
+#增加cloudflare-worker的支持
+#salvo_core = { workspace = true}
+salvo_core = { workspace = true, optional = true }
+# salvo_extra = { workspace = true, features = ["full"], optional = true }
+# salvo-compression = { workspace = true, features = ["full"], optional = true }
+# salvo-jwt-auth = { workspace = true, features = ["full"], optional = true }
+# salvo-cache = { workspace = true, features = ["full"], optional = true }
+# salvo-cors = { workspace = true, optional = true }
+# salvo-csrf = { workspace = true, features = ["full"], optional = true }
+# salvo-flash = { workspace = true, features = ["full"], optional = true }
+# salvo-rate-limiter = { workspace = true, features = ["full"], optional = true }
+# salvo-session = { workspace = true, optional = true }
+# salvo-serve-static = { workspace = true, features = ["full"], optional = true }
+# salvo-proxy = { workspace = true, optional = true }
+# salvo-otel = { workspace = true, optional = true }
+# salvo-oapi = { workspace = true, features = ["full"], optional = true }
