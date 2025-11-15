@@ -1,9 +1,9 @@
 <div align="center">
 <p><img alt="Salvo" width="132" style="max-width:40%;min-width:60px;" src="https://salvo.rs/images/logo-text.svg" /></p>
 <p>
-    <a href="https://github.com/salvo-rs/salvo/blob/main/README.md">English</a>&nbsp;&nbsp;
-    <a href="https://github.com/salvo-rs/salvo/blob/main/README.zh.md">简体中文</a>&nbsp;&nbsp;
-    <a href="https://github.com/salvo-rs/salvo/blob/main/README.zh-hant.md">繁體中文</a>
+    <a href="https://github.com/luo12yan/salvo/blob/main//README.md">English</a>&nbsp;&nbsp;
+    <a href="https://github.com/luo12yan/salvo/blob/main//README.zh.md">简体中文</a>&nbsp;&nbsp;
+    <a href="https://github.com/luo12yan/salvo/blob/main/README.zh-hant.md">繁體中文</a>
 </p>
 <p>
 <a href="https://github.com/salvo-rs/salvo/actions">
@@ -34,9 +34,10 @@
 </a>
 </p>
 </div>
-
 Salvo is an extremely simple and powerful Rust web backend framework. Only basic Rust knowledge is required to develop backend services.
+
 **This project is a modified version of [czlz](https://czlz.fun), designed to support the Cloudflare Workers runtime.**
+
 ## 🎯 Features
 
 - Built with [Hyper 1](https://crates.io/crates/hyper) and [Tokio](https://crates.io/crates/tokio);
