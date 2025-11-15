@@ -36,7 +36,7 @@
 </div>
 
 Salvo is an extremely simple and powerful Rust web backend framework. Only basic Rust knowledge is required to develop backend services.
-
+**This project is a modified version of [czlz](https://czlz.fun), designed to support the Cloudflare Workers runtime.**
 ## 🎯 Features
 
 - Built with [Hyper 1](https://crates.io/crates/hyper) and [Tokio](https://crates.io/crates/tokio);
