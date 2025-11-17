@@ -1,8 +1,8 @@
 <div align="center">
 <p><img alt="Salvo" width="132" style="max-width:40%;min-width:60px;" src="https://salvo.rs/images/logo-text.svg" /></p>
 <p>
-    <a href="https://github.com/luo12yan/salvo/blob/main//README.md">English</a>&nbsp;&nbsp;
-    <a href="https://github.com/luo12yan/salvo/blob/main//README.zh.md">简体中文</a>&nbsp;&nbsp;
+    <a href="https://github.com/luo12yan/salvo/blob/main/README.md">English</a>&nbsp;&nbsp;
+    <a href="https://github.com/luo12yan/salvo/blob/main/README.zh.md">简体中文</a>&nbsp;&nbsp;
     <a href="https://github.com/luo12yan/salvo/blob/main/README.zh-hant.md">繁體中文</a>
 </p>
 <p>
@@ -36,7 +36,7 @@
 </div>
 Salvo(賽風) 是一個極其簡單且功能強大的 Rust Web 後端框架。僅僅需要基礎 Rust 知識即可開發後端服務。
 
-**本項目爲[粗製亂造](https://czlz.fun)修改版，用於支持Cloudflare Workers運行時。**
+**本項目爲[粗製亂造](https://czlz.fun)修改版，用於支持Cloudflare Worker運行時。**
 
 本項目正在參與 Gitee 2025 開源項目評選，如覺得本項目優秀，請大家[為本項目投票](https://gitee.com/activity/2025opensource?ident=I59QVO): https://gitee.com/activity/2025opensource?ident=I59QVO
 
